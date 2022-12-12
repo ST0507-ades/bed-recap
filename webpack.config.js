@@ -5,6 +5,7 @@ module.exports = {
     entry: {
         App: './react/output/App.js',
         RetrieveAllPage: './react/output/RetrieveAllPage.js',
+        RetrievePage: './react/output/RetrievePage.js',
     },
     output: {
         filename: '[name].js',
