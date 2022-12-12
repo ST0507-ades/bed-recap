@@ -4,6 +4,7 @@ const path = require('path');
 module.exports = {
     entry: {
         App: './react/output/App.js',
+        RetrieveAllPage: './react/output/RetrieveAllPage.js',
     },
     output: {
         filename: '[name].js',
