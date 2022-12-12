@@ -80,23 +80,43 @@ eval("\n\nif (false) {} else {\n  module.exports = __webpack_require__(/*! ./cjs
 
 /***/ }),
 
-/***/ "./react/output/App.js":
-/*!*****************************!*\
-  !*** ./react/output/App.js ***!
-  \*****************************/
+/***/ "./react/output/RetrievePage.js":
+/*!**************************************!*\
+  !*** ./react/output/RetrievePage.js ***!
+  \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-dom/client */ \"./node_modules/react-dom/client.js\");\n/* harmony import */ var _HelloWorld_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HelloWorld.js */ \"./react/output/HelloWorld.js\");\n/* provided dependency */ var React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\r\n\r\nfunction App(props) {\r\n  return /*#__PURE__*/React.createElement(\"div\", null, /*#__PURE__*/React.createElement(_HelloWorld_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"], null));\r\n}\r\n\r\n// To render onto HTML\r\nconst root = react_dom_client__WEBPACK_IMPORTED_MODULE_0__.createRoot(document.getElementById('root'));\r\nroot.render( /*#__PURE__*/React.createElement(App, null));\n\n//# sourceURL=webpack:///./react/output/App.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-dom/client */ \"./node_modules/react-dom/client.js\");\n/* harmony import */ var _components_AddModuleForm_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/AddModuleForm.js */ \"./react/output/components/AddModuleForm.js\");\n/* harmony import */ var _components_ModulesTableWithControls_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/ModulesTableWithControls.js */ \"./react/output/components/ModulesTableWithControls.js\");\n/* provided dependency */ var React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\n\n\nfunction fetchModule(code) {\n  return fetch(`/modules/${code}`).then(function (response) {\n    return response.json();\n  });\n}\nfunction RetrievePage(props) {\n  const [codes, setCodes] = React.useState([]);\n  const [modules, setModules] = React.useState({});\n  return /*#__PURE__*/React.createElement(\"div\", null, /*#__PURE__*/React.createElement(\"h1\", null, \"Retrieve Module\"), /*#__PURE__*/React.createElement(\"div\", null, /*#__PURE__*/React.createElement(_components_AddModuleForm_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"], {\n    onAddModule: function (code) {\n      return setCodes([...codes, code]);\n    }\n  })), /*#__PURE__*/React.createElement(\"div\", null, /*#__PURE__*/React.createElement(_components_ModulesTableWithControls_js__WEBPACK_IMPORTED_MODULE_2__[\"default\"], {\n    codes: codes,\n    modules: modules,\n    onRemove: function (index) {\n      codes.splice(index, 1);\n      setCodes([...codes]);\n    }\n  }), /*#__PURE__*/React.createElement(\"p\", null, /*#__PURE__*/React.createElement(\"button\", {\n    id: \"retrieve\",\n    onClick: function () {\n      const fetchModulePromises = [];\n      for (let i = 0; i < codes.length; i++) {\n        const code = codes[i];\n        fetchModulePromises.push(fetchModule(code).then(function (body) {\n          if (body.error) throw new Error(body.error);\n          return {\n            name: body.module.name,\n            credit: body.module.credit\n          };\n        }));\n      }\n      Promise.all(fetchModulePromises).then(function (fetchedModules) {\n        for (let i = 0; i < fetchedModules.length; i++) {\n          modules[codes[i]] = fetchedModules[i];\n        }\n        setModules({\n          ...modules\n        });\n      });\n    }\n  }, \"Retrieve\"))));\n}\nconst root = react_dom_client__WEBPACK_IMPORTED_MODULE_0__.createRoot(document.getElementById('root'));\nroot.render( /*#__PURE__*/React.createElement(RetrievePage, null));\n\n//# sourceURL=webpack:///./react/output/RetrievePage.js?");
 
 /***/ }),
 
-/***/ "./react/output/HelloWorld.js":
-/*!************************************!*\
-  !*** ./react/output/HelloWorld.js ***!
-  \************************************/
+/***/ "./react/output/components/AddModuleForm.js":
+/*!**************************************************!*\
+  !*** ./react/output/components/AddModuleForm.js ***!
+  \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ HelloWorld)\n/* harmony export */ });\n/* provided dependency */ var React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\nfunction HelloWorld(props) {\r\n  return /*#__PURE__*/React.createElement(\"h1\", null, \"Hello World\");\r\n}\n\n//# sourceURL=webpack:///./react/output/HelloWorld.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ AddModuleForm)\n/* harmony export */ });\n/* provided dependency */ var React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\nfunction AddModuleForm(props) {\n  const [code, setCode] = React.useState('');\n  return /*#__PURE__*/React.createElement(\"form\", {\n    onSubmit: function (event) {\n      setCode('');\n      event.preventDefault();\n      return props.onAddModule(code);\n    }\n  }, /*#__PURE__*/React.createElement(\"fieldset\", null, /*#__PURE__*/React.createElement(\"p\", null, /*#__PURE__*/React.createElement(\"label\", null, \"Code\"), /*#__PURE__*/React.createElement(\"input\", {\n    value: code,\n    onChange: function (event) {\n      setCode(event.target.value);\n    },\n    type: \"text\",\n    name: \"code\",\n    required: true\n  }))), /*#__PURE__*/React.createElement(\"button\", {\n    type: \"submit\"\n  }, \"Add to table\"));\n}\n\n//# sourceURL=webpack:///./react/output/components/AddModuleForm.js?");
+
+/***/ }),
+
+/***/ "./react/output/components/ModuleRowWithControls.js":
+/*!**********************************************************!*\
+  !*** ./react/output/components/ModuleRowWithControls.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ ModuleRowWithControls)\n/* harmony export */ });\n/* provided dependency */ var React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\nfunction ModuleRowWithControls(props) {\n  const [grade, setGrade] = React.useState(props.value || 0);\n  return /*#__PURE__*/React.createElement(\"tr\", null, /*#__PURE__*/React.createElement(\"td\", {\n    className: \"code\"\n  }, props.code || '???'), /*#__PURE__*/React.createElement(\"td\", {\n    className: \"name\"\n  }, props.name || '???'), /*#__PURE__*/React.createElement(\"td\", {\n    className: \"credit\"\n  }, props.credit || '???'), /*#__PURE__*/React.createElement(\"td\", {\n    className: \"grade\"\n  }, /*#__PURE__*/React.createElement(\"select\", {\n    value: grade,\n    onChange: function (event) {\n      setGrade(event.target.value);\n    }\n  }, /*#__PURE__*/React.createElement(\"option\", {\n    disabled: true\n  }, \"-\"), /*#__PURE__*/React.createElement(\"option\", {\n    value: \"4\"\n  }, \"A\"), /*#__PURE__*/React.createElement(\"option\", {\n    value: \"3.5\"\n  }, \"B+\"), /*#__PURE__*/React.createElement(\"option\", {\n    value: \"3\"\n  }, \"B\"), /*#__PURE__*/React.createElement(\"option\", {\n    value: \"2.5\"\n  }, \"C+\"), /*#__PURE__*/React.createElement(\"option\", {\n    value: \"2\"\n  }, \"C\"), /*#__PURE__*/React.createElement(\"option\", {\n    value: \"1.5\"\n  }, \"D+\"), /*#__PURE__*/React.createElement(\"option\", {\n    value: \"1\"\n  }, \"D\"), /*#__PURE__*/React.createElement(\"option\", {\n    value: \"0.5\"\n  }, \"D-\"), /*#__PURE__*/React.createElement(\"option\", {\n    value: \"0\"\n  }, \"F\"))), /*#__PURE__*/React.createElement(\"td\", {\n    className: \"remove\"\n  }, /*#__PURE__*/React.createElement(\"button\", {\n    onClick: props.onRemove\n  }, \"X\")));\n}\n\n//# sourceURL=webpack:///./react/output/components/ModuleRowWithControls.js?");
+
+/***/ }),
+
+/***/ "./react/output/components/ModulesTableWithControls.js":
+/*!*************************************************************!*\
+  !*** ./react/output/components/ModulesTableWithControls.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ ModulesTableWithControls)\n/* harmony export */ });\n/* harmony import */ var _ModuleRowWithControls_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ModuleRowWithControls.js */ \"./react/output/components/ModuleRowWithControls.js\");\n/* provided dependency */ var React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nfunction ModulesTableWithControls(props) {\n  return /*#__PURE__*/React.createElement(\"table\", {\n    border: \"1\"\n  }, /*#__PURE__*/React.createElement(\"thead\", null, /*#__PURE__*/React.createElement(\"tr\", null, /*#__PURE__*/React.createElement(\"th\", null, \"Code\"), /*#__PURE__*/React.createElement(\"th\", null, \"Name\"), /*#__PURE__*/React.createElement(\"th\", null, \"Credit\"), /*#__PURE__*/React.createElement(\"th\", null, \"Grade\"), /*#__PURE__*/React.createElement(\"th\", null, \"Remove\"))), /*#__PURE__*/React.createElement(\"tbody\", {\n    id: \"module-tbody\"\n  }, props.codes.map(function (code, index) {\n    return /*#__PURE__*/React.createElement(_ModuleRowWithControls_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"], {\n      key: index,\n      code: code,\n      name: props.modules[code]?.name,\n      credit: props.modules[code]?.credit,\n      onRemove: function () {\n        return props.onRemove(index);\n      }\n    });\n  })));\n}\n\n//# sourceURL=webpack:///./react/output/components/ModulesTableWithControls.js?");
 
 /***/ })
 
@@ -172,7 +192,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./react/output/App.js");
+/******/ 	var __webpack_exports__ = __webpack_require__("./react/output/RetrievePage.js");
 /******/ 	
 /******/ })()
 ;
